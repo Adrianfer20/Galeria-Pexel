@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Galeria - Inicio</title>
+    <!-- Fonts Google -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+    href="https://fonts.googleapis.com/css2?family=Oswald:wght@400;500;700&family=Roboto:ital,wght@0,100;0,400;0,700;1,100;1,400;1,700&display=swap"
+    rel="stylesheet">
+    <!-- CSS MAIN -->
+    <link rel="stylesheet" href="./css/main.css">
+</head>
+
+<body class="font-roboto min-h-screen">
+    <!-- Header APP -->
+    <header class="flex flex-wrap items-center justify-center">
+        <div class="w-full flex flex-col items-center justify-center pt-24 pb-6">
+            <h1 class="font-oswald font-light text-5xl md:text-7xl text-center text-indigo-800 tracking-[.26em]  pl-2">GALERIA</h1>
+            <p class="text-indigo-400 text-sm md:text-base text-center font-bold uppercase">la imaginación nos hace infinitos</p>
+        </div>
+        <div class="w-full flex flex-wrap justify-center items-center mt-4">
+            <h4 class="w-full text-center text-base md:text-xl uppercase mb-4">Categorias</h4>
+            <ul id="btn-categories" class="flex flex-wrap items-center justify-center gap-2 text-sm md:text-base">
+                <li data-category="all"
+                    class="border-2 border-indigo-800 bg-indigo-800 text-indigo-200 font-semibold uppercase rounded-md cursor-pointer transition delay-150 duration-300 ease-in-out hover:bg-indigo-200 hover:text-indigo-800 py-1 px-4">
+                    todos</li>
+                <li data-category="dog"
+                    class="border-2 border-indigo-800 bg-transparent text-indigo-800 font-semibold uppercase rounded-md cursor-pointer transition delay-150 duration-300 ease-in-out hover:bg-indigo-800 hover:text-indigo-200 py-1 px-4">
+                    perros</li>
+                <li data-category="cat"
+                    class="border-2 border-indigo-800 bg-transparent text-indigo-800 font-semibold uppercase rounded-md cursor-pointer transition delay-150 duration-300 ease-in-out hover:bg-indigo-800 hover:text-indigo-200 py-1 px-4">
+                    gatos</li>
+                <li data-category="nature"
+                    class="border-2 border-indigo-800 bg-transparent text-indigo-800 font-semibold uppercase rounded-md cursor-pointer transition delay-150 duration-300 ease-in-out hover:bg-indigo-800 hover:text-indigo-200 py-1 px-4">
+                    naturaleza</li>
+                <li data-category="woman"
+                    class="border-2 border-indigo-800 bg-transparent text-indigo-800 font-semibold uppercase rounded-md cursor-pointer transition delay-150 duration-300 ease-in-out hover:bg-indigo-800 hover:text-indigo-200 py-1 px-4">
+                    mujeres</li>
+                <li data-category="car"
+                    class="border-2 border-indigo-800 bg-transparent text-indigo-800 font-semibold uppercase rounded-md cursor-pointer transition delay-150 duration-300 ease-in-out hover:bg-indigo-800 hover:text-indigo-200 py-1 px-4">
+                    carros</li>
+                <li data-category="men"
+                    class="border-2 border-indigo-800 bg-transparent text-indigo-800 font-semibold uppercase rounded-md cursor-pointer transition delay-150 duration-300 ease-in-out hover:bg-indigo-800 hover:text-indigo-200 py-1 px-4">
+                    hombres</li>
+            </ul>
+        </div>
+    </header>
+    <!-- APP -->
+    <section class="px-2 md:px-6">
+        <div  id="main-gallery" class="max-w-4xl columns-2 md:columns-4 gap-6 py-16 mx-auto">
+        </div>
+        <div class="flex items-center justify-center mb-16">
+            <button id="btn-more"
+                class="col-span-4 text-indigo-700 text-center underline rounded-md transition delay-150 duration-300 ease-in-out hover:bg-indigo-200 hover:text-indigo-800 cursor-pointer py-1 px-2">ver
+                màs...</button>
+        </div>
+    </section>
+    <!-- Footer APP -->
+    <footer class="flex flex-wrap items-center justify-around text-lg px-6 py-12 bottom-0">
+        <h2 class="w-auto bg-transparent text-indigo-800 font-oswald font-medium uppercase tracking-[.20em]">galeria</h2>
+        <div class="grid grid-cols-12 gap-3">
+            <h4 id="btn-sobreNosotros"
+                class="col-span-12 md:col-span-4 text-indigo-700 text-center underline rounded-md transition delay-150 duration-300 ease-in-out hover:bg-indigo-200 hover:text-indigo-800 cursor-pointer py-1 px-2">
+                Sobre Nosotros</h4>
+            <h4 id="btn-politicaDeUso"
+                class="col-span-12 md:col-span-4 text-indigo-700 text-center underline rounded-md transition delay-150 duration-300 ease-in-out hover:bg-indigo-200 hover:text-indigo-800 cursor-pointer py-1 px-2">
+                Politicas de Uso</h4>
+            <h4 id="btn-copyright"
+                class="col-span-12 md:col-span-4 text-indigo-700 text-center underline rounded-md transition delay-150 duration-300 ease-in-out hover:bg-indigo-200 hover:text-indigo-800 cursor-pointer py-1 px-2">
+                Copyright</h4>
+        </div>
+    </footer>
+    <!-- Interactive APP With Javascript -->
+    <script src="./js/main.js"></script>
+</body>
+</html>
