@@ -118,7 +118,7 @@ const showGallery = async (more) => {
     const mainGalery = document.getElementById("main-gallery");
     if (!more) mainGalery.innerHTML = '';
     mainGalery.appendChild(framet);
-    document.querySelector('#box-spinner').remove();
+    document.getElementById('box-spinner').remove();
     return true;
 }
 
