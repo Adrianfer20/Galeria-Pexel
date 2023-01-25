@@ -5,23 +5,26 @@ const getDataPhotos = async (query, more) => {
     if (more) {
         page = localStorage.getItem('page');
         localStorage.setItem("page", Number(1 * page + 1));
-        console.log(page);
     }
     else {
         page = 1;
         localStorage.setItem("page", Number(page + 1));
     };
-    const BASE_URL = 'https://api.pexels.com/v1/search?query=' + query + '&per_page=30&page=' + page;
-    const response = await fetch(BASE_URL, {
-        method: 'GET',
-        headers: {
-            Accept: 'application/json',
-            Authorization: API_KEY
-        }
-    });
-
-    const data = await response.json();
-    return data.photos;
+    try {
+        const BASE_URL = 'https://api.pexels.com/v1/search?query=' + query + '&per_page=30&page=' + page;
+        const response = await fetch(BASE_URL, {
+            method: 'GET',
+            headers: {
+                Accept: 'application/json',
+                Authorization: API_KEY
+            }
+        });
+    
+        const data = await response.json();
+        return data.photos;
+    } catch (error) {
+        return {error:true, msg:error};
+    }
 }
 
 //CRUD
@@ -31,7 +34,7 @@ const creatModal = (params) => {
     modal.className = 'fixed top-0 left-0 right-0 bottom-0 w-full h-screen flex items-center justify-center bg-black/70';
 
     const boxModal = document.createElement('div');
-    boxModal.className = 'max-w-screen-sm h-72 relative flex flex-col bg-slate-100 text-slate-800 rounded-lg shadow-md py-6 pr-4';
+    boxModal.className = 'max-w-screen-sm h-52 md:h-72 relative flex flex-col bg-slate-100 text-slate-800 rounded-lg shadow-md py-6 pr-4';
 
     const titleModal = document.createElement('h2');
     titleModal.className = 'text-xl text-center font-bold sticky mb-4';
@@ -67,6 +70,19 @@ const creatMsgCookies = (params) => {
     <button id="btn-cookies" class="font-bold text-indigo-200 bg-indigo-800 rounded-md shadow-md py-1 px-4">ACEPTAR</button>`;
     return boxMsg;
 }
+const creatSpinner = () => {
+    const boxspinner = document.createElement('div');
+    boxspinner.id = 'box-spinner';
+    boxspinner.className = 'adsolute  w-full flex items-center justify-center mx-auto';
+    boxspinner.innerHTML = `<div class="spinner">
+    <div class="rect1"></div>
+    <div class="rect2"></div>
+    <div class="rect3"></div>
+    <div class="rect4"></div>
+    <div class="rect5"></div>
+  </div>`;
+  return boxspinner;
+}
 const updateBtnCategory = (btn) => {
     btn.classList.add('bg-indigo-800', 'text-indigo-200');
     btn.classList.remove('text-indigo-800', 'bg-transparent');
@@ -80,10 +96,10 @@ const updateBtnCategory = (btn) => {
 //UI
 const showGallery = async (more) => {
     const query = localStorage.getItem('categories') || 'all';
-    const photos = await getDataPhotos(query, more);
-    console.log(photos);
+    const response = await getDataPhotos(query, more);
+    if(response.error) return false;
     const framet = new DocumentFragment();
-    photos.forEach(photo => {
+    response.forEach(photo => {
         const item = document.createElement('div');
         item.className = "flex justify-center relative mb-4";
         item.innerHTML = `
@@ -102,6 +118,8 @@ const showGallery = async (more) => {
     const mainGalery = document.getElementById("main-gallery");
     if (!more) mainGalery.innerHTML = '';
     mainGalery.appendChild(framet);
+    document.querySelector('#box-spinner').remove();
+    return true;
 }
 
 const showModal = (params) => {
@@ -110,25 +128,37 @@ const showModal = (params) => {
     app.appendChild(modal);
 }
 
-const showMsgCookies = (params) => {
+const showMsg = (params) => {
     const msgCookies = creatMsgCookies(params);
     document.querySelector('body').appendChild(msgCookies);
 }
+const showSpinner = () => {
+    const spinner = creatSpinner();
+    document.getElementById('main-gallery').appendChild(spinner);
+}
 
 //Events
-window.addEventListener('DOMContentLoaded', () => {
+window.addEventListener('DOMContentLoaded', async () => {
     localStorage.setItem('categories', 'all');
-    showGallery();
+    const isShow = await showGallery();
+    if (!isShow) {
+        const params = {
+            title: 'Error Al Cargar Las Imagenes',
+            msg: 'En este sitio hacemos uso del internet; por favor verifique su conexion a internet.'
+        }
+        showMsg(params);
+        return;
+    }
     setTimeout(() => {
         const params = {
             title: 'Uso de Cookies',
             msg: 'En este sitio hacemos usos de las cookies porque nos permite hacer un mejor uso del rendimiento del dipositivo.'
         }
-        showMsgCookies(params);
+        showMsg(params);
     }, 5000);
 });
 
-window.addEventListener('click', (e) => {
+window.addEventListener('click', async (e) => {
     const id = e.target.id;
     if (e.target.parentElement.id === 'btn-categories') {
         const btn = e.target;
@@ -140,7 +170,16 @@ window.addEventListener('click', (e) => {
         showGallery();
     }
     else if (id === 'btn-more') {
-        showGallery(true);
+        showSpinner();
+        const isShow = await showGallery(true);
+        if (!isShow) {
+            const params = {
+                title: 'Error Al Cargar Las Imagenes',
+                msg: 'En este sitio hacemos uso del internet; por favor verifique su conexion a internet.'
+            }
+            showMsg(params);
+            return;
+        }
     }
     else if (id === 'btn-sobreNosotros') {
         const paragraph = [
